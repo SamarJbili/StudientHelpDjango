@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <!-- Other head content -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="card2">
+    <h4><p class="card-text">{{ post.author }}</p></h4>     
+    <h1>{{ post.Title }}</h1>
+    <h6 class="card-text">{{ post.Date }}</h6>
+
+    <p>Image: <img src="{{ post.Image.url }}" alt="Image" width="200"></p>
+    <p>Type: {{ post.get_Type_display }}</p>
+    <p>Date: {{ post.Date }}</p>
+    <p>Catégorie: {{ post.Catg }}</p>
+
+    {% if logement %}
+        <h2>Détails du Logement</h2>
+        <p>Localisation: {{ logement.Localisation }}</p>
+        <p>Description: {{ logement.Description }}</p>
+        <p>Contact Info: {{ logement.Contactinfo }}</p>
+    {% elif stage %}
+        <h2>Détails du Stage</h2>
+        <p>Type: {{ stage.get_Stage_type_display }}</p>
+        <p>Société: {{ stage.Société }}</p>
+        <p>Durée: {{ stage.Durée }}</p>
+        <p>Sujet: {{ stage.Sujet }}</p>
+        <p>Contact Info: {{ stage.Contactinfo }}</p>
+        <p>Spécialité: {{ stage.Spécialité }}</p>
+    {% elif even_club %}
+        <h2>Détails de l'Événement Club</h2>
+        <p>Intitulé: {{ even_club.Intitulé }}</p>
+        <p>Description: {{ even_club.Description }}</p>
+        <p>Lieu: {{ even_club.Lieu }}</p>
+        <p>Contact Info: {{ even_club.ContactInfo }}</p>
+        <p>Club: {{ even_club.Club }}</p>
+    {% elif even_social %}
+        <h2>Détails de l'Événement Social</h2>
+        <p>Intitulé: {{ even_social.Intitulé }}</p>
+        <p>Description: {{ even_social.Description }}</p>
+        <p>Lieu: {{ even_social.Lieu }}</p>
+        <p>Contact Info: {{ even_social.ContactInfo }}</p>
+        <p>Prix: {{ even_social.Prix }}</p>
+    {% elif transport %}
+        <h2>Détails du Transport</h2>
+        <p>Départ: {{ transport.Départ }}</p>
+        <p>Destination: {{ transport.Destination }}</p>
+        <p>Heure de Départ: {{ transport.Heure_dep }}</p>
+        <p>Nombre de sièges: {{ transport.Nbre_sièges }}</p>
+        <p>Contact Info: {{ transport.Contactinfo }}</p>
+    {% elif recommandation %}
+        <h2>Recommandation</h2>
+        <p>{{ recommandation.Texte }}</p>
+    {% endif %}
+    <div class="button-group">
+        <div class="post">
+            <a href="{% url 'like_post' post.id %}" class="fa-regular fa-heart fa-2x like-icon"></a>
+            <span class="like-count">{{ post.likes }} Likes</span>
+        </div>
+        <div>
+            <a href="{% url 'add-comment' post.id %}" class="fa-regular fa-comment fa-2x comment-icon"></a>
+            <span class="comment-count">{{ post.get_comment_count }} Comments</span>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <h3>Commentaires</h3>
+        <div class="comments">
+            {% for comment in post.comment_set.all %}
+            <div class="comment">
+                <span class="comment-author">{{ comment.author }}</span>
+                <div class="comment-content">
+                    <p>{{ comment.content }}</p>
+                </div>
+                <span class="comment-date">{{ comment.created_at }}</span>
+            </div>
+            {% endfor %}
+        </div>
+       
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h6 {
+    margin: 10px 0;
+}
+
+.card2 {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card2 img {
+    width: 60%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-group .like-icon, .button-group .comment-icon {
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.button-group .like-count, .button-group .comment-count {
+    margin-left: 10px;
+}
+
+.comment-section {
+    margin-top: 30px;
+}
+
+.comments {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-content {
+    background-color: #f0f2f5;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 500px;
+    word-wrap: break-word;
+}
+
+.comment-date {
+    color: #999;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.add-comment {
+    margin-top: 20px;
+}
+
+.add-comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comment-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4267B2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-btn:hover {
+    background-color: #365899;
+}
+</style>
+{% endblock %}

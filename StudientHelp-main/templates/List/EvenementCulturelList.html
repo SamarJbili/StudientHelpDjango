@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+<head>
+    <!-- Other head content -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<div class="list">
+<div class="card">
+
+    
+    <!-- Boutons -->
+    <div class="buttons">
+        <a class="button" href="{% url 'create-logement' %}">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x"></i></span>
+            Logement
+        </a>
+           
+        <a class="button" href="{% url 'create-stage' %}">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-briefcase fa-stack-1x"></i></span>
+            Stage
+        </a>
+        
+        <div class="dropdown">
+            <a class="button" href="#"> <!-- lien non fonctionnel, juste pour le style -->
+                <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                Evenement
+            </a>
+            <div class="dropdown-content">
+                <a  class="button" href="{% url 'create-evenementCult' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                    Culturel</a>
+                <a  class="button" href="{% url 'create-evenementSc' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                    Scientifique</a>
+            </div>
+        </div>
+        
+        <a class="button" href="{% url 'create-transport' %}">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-truck fa-stack-1x "></i></span>
+            Transport
+        </a>
+    </div>
+</div>
+<div class="card5" style="width: 18rem;">
+    <div class="card-body">
+    
+      <a href="{% url 'mespost-view' %}" class="button">Consulter Mes Postes</a>
+    </div>
+  </div>
+
+
+  {% for post in object_list %}
+  <div class="card2">
+      <p class="card-text">{{ post.author }}</p>
+      <h6 class="card-text">{{ post.Date }}</h6>
+      {% if post.Image %}
+          {{ post.image_preview|safe }}
+      {% else %}
+          <img src="media/anonyme1.png">                
+      {% endif %}
+      <div class="card-body">
+          <h5 class="card-title">Title: {{ post.Title }}</h5>
+      </div>
+      <div class="button-group">
+        <div class="post">
+            <a href="{% url 'like_post' post.id %}" class="fa-regular fa-heart fa-2x like-icon" > <br></a>
+            <span class="like-count">{{ post.likes }}Likes</span>
+        </div>
+        <div>
+            <a href="{% url 'add-comment' post.id %}" class="fa-regular fa-comment fa-2x comment-icon"></a>
+            <span class="comment-count">{{ post.get_comment_count }} Comments            </span> 
+
+        </div>
+        <div style="margin-left: auto;">
+            <a href="{% url 'post-detail' pk=post.pk %}">Détails</a>
+        </div>
+    </div>
+      <span class="comment-count">{{ post.comment.count }}</span>
+      <div class="comment-section">
+        <div class="comments">
+            {% for comment in post.comment_set.all|slice:":2" %}
+            <div class="comment">
+                <span class="comment-author">{{ comment.author }}</span>
+                <div class="comment-content">
+                    <p>{{ comment.content }}</p>
+                </div>
+                <span class="comment-date">{{ comment.created_at }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+
+        .button-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .button-group .like-icon, .button-group .comment-icon {
+            font-size: 2em; /* Adjust the value as needed */
+            cursor: pointer;
+        }
+
+        .button-group .like-icon {
+            margin-right: 10px; /* Adjust the value as needed */
+        }
+
+        .button-group .comment-icon {
+            margin-left: 10px; /* Adjust the value as needed */
+        }
+
+  .comment-count {
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+  }
+
+  .comments {
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+  }
+
+  .comment {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+  }
+
+  .comment-author {
+      font-weight: bold;
+      margin-right: 10px;
+  }
+
+  .comment-content {
+      background-color: #f0f2f5;
+      padding: 10px;
+      border-radius: 5px;
+      max-width: 500px;
+      word-wrap: break-word;
+  }
+
+  .comment-date {
+      color: #999;
+      font-size: 12px;
+      margin-left: auto;
+  }
+
+  .comment-btn {
+      display: inline-block;
+      padding: 5px 10px;
+      margin-top: 10px;
+      background-color: #4267B2;
+      color: white;
+      border-radius: 3px;
+      text-decoration: none;
+  }
+
+  .comment-btn:hover {
+      background-color: #365899;
+  }
+
+    .card5 {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px;
+        width: calc(65% - 40px);
+        margin-bottom: 20px; /* Réduire l'espacement entre les cartes */
+        position: relative;
+        left: 80%;
+        bottom: 100px;
+    }
+        .dropdown {
+         position: relative;
+         display: inline-block;
+     }
+     
+     .dropdown-content {
+         display: none;
+         position: absolute;
+         background-color: #f9f9f9;
+         min-width: 160px;
+         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+         z-index: 1;
+     }
+     
+     .dropdown-content a {
+         color: black;
+         padding: 12px 16px;
+         text-decoration: none;
+         display: block;
+     }
+     
+     .dropdown-content a:hover {
+         background-color: #f1f1f1;
+     }
+     
+     .dropdown:hover .dropdown-content {
+         display: block;
+     }
+     
+            .card2 {
+             background-color: white; /* Fond blanc */
+             width: calc(65% - 40px); /* Largeur de 300 pixels */
+             border: 1px solid #ccc; /* Bordure grise */
+             border-radius: 10px; /* Coins arrondis */
+             padding: 20px; /* Espacement interne */
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+             margin-bottom: 40px;
+             position: relative;
+             left: 14%;
+             bottom: 120px;
+             }
+         
+             .card2 img {
+    width: 60%; /* Faire en sorte que l'image occupe 60% de la largeur de la carte */
+    height: auto; /* Ajuster automatiquement la hauteur pour préserver les proportions */
+    margin: 0 auto; /* Centrer horizontalement l'image dans la carte */
+    display: block; /* Assurer que l'image est affichée comme un bloc pour appliquer les marges */
+    margin-bottom: 10px; /* Ajouter un espacement en bas de l'image */
+}
+
+     
+         
+         input[type="text"] {
+             width: 100%;
+             background-color: #f0f0f0;
+     
+             padding: 10px;
+             border: 1px solid #ccc;
+             border-radius: 10px;
+             margin-bottom: 20px;
+             box-sizing: border-box; /* Pour inclure le padding dans la largeur */
+         }
+         .button {
+             background-color: white; /* Bleu */
+             padding: 10px 20px;
+             text-align: left; /* Aligner le texte à gauche */
+             text-decoration: none;
+             display: inline-block;
+             border-radius: 10px;
+             margin-right: 10px;
+             margin-bottom: 10px;
+         }
+         
+         /* Style pour les boutons lorsqu'ils sont survolés */
+         .button:hover {
+             background-color: #f0f0f0;
+         }
+         
+         .list {
+             overflow: hidden;
+             
+         }
+         
+       .search-bar {
+             margin-top: 50px; /* Espacement par rapport à la barre de navigation */
+             margin-bottom: 20px; /* Espacement par rapport au contenu suivant */
+         }
+             
+         .card {
+         background-color: white;
+         border-radius: 10px;
+         padding: 20px;
+         margin: 20px;
+         width: calc(65% - 40px);
+         margin-bottom: 20px; /* Réduire l'espacement entre les cartes */
+         position: relative;
+         left: 13%;
+         margin-top: 60px;
+     }
+     
+     
+     
+     </style>
+
+
+{% endblock %}

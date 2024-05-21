@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    <style>
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin: 0 auto; /* Center the container horizontally */
+            margin-top: 50vh; /* Push the container towards the bottom */
+            transform: translateY(-50%); /* Adjust to vertically center the container */
+        }
+
+        .container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .container p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .container form, .container a {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .container button, .container a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #e74c3c;
+            margin: 5px;
+        }
+
+        .container a {
+            background-color: #3498db;
+        }
+
+        .container button:hover, .container a:hover {
+            background-color: #c0392b;
+        }
+
+        .container a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Delete</h1>
+        <p>Are you sure you want to delete "{{ logement.title }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm</button>
+        </form>
+        <a href="{% url 'mespost-view' %}">Cancel</a>
+    </div>
+</body>
+</html>
+{% endblock %}

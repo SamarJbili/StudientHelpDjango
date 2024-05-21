@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <!-- Other head content -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<div class="card">
+    <h2>Se connecter </h2>
+
+<form method="post">
+{% csrf_token %}
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="alert alert-danger">{{ error }}</p>
+{% endfor %}
+{% endif %}
+<table>
+    {% for field in form %}
+    <tr>
+    <td>{{ field.label_tag }}</td>
+    <td>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <button type="submit">se connecter</button>
+    </form>
+    </div>
+    <div>
+    <small>
+    Pas encore inscrit.e?
+    <a href="{% url 'inscription' %}">
+    S'inscrire
+    </a>
+    <br>
+    Mot de passe oublié ?
+    <a href="{% url 'change_password' %}">
+    Renouveler mon mot de passe
+    </a>
+    </small>
+</div>
+
+<style>
+    .card {
+        width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        margin-bottom: 50px;
+    }
+    
+    .card h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    table td {
+        padding: 8px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: calc(100% - 16px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    button[type="submit"] {
+        width: 100%;
+        background-color: #4267B2;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #405d9b;
+    }
+    
+    div small {
+        margin-top: 10px;
+        display: block;
+        text-align: center;
+    }
+    
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    
+    </style>
+{% endblock %}

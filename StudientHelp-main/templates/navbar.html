@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Help Student{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+      
+        /* Styles for the navigation bar */
+        .navbar {
+            min-height: 40px;
+            padding-top: 5px;
+            display: flex;
+        }
+
+        /* Styles for the navigation link text */
+        .nav-link.custom-link {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        /* Styles for the search bar */
+        .compact-search-form {
+            margin-right: 10px;
+        }
+
+        /* Styles for the navigation bar icon */
+        .navbar-toggler {
+            margin-top: 5px;
+        }
+
+        .navbar.fixed-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff !important;
+
+        }
+
+        /* Add padding to the body to prevent content overlap */
+        body {
+            padding-top: 56px;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container-fluid">
+                
+                <img src="{% static 'iset.jpg' %}" alt="Logo" style="padding: 18px 10px; width: 60px;   ">  
+                <!-- Navbar brand/logo -->
+                <a class="navbar-brand" href="{% url 'acceuil' %}">Help Student</a>
+                <!-- Toggle button for mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Navbar content -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <form class="navbar-form compact-search-form" method="GET" action="{% url 'search' %}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="q" placeholder="Rechercher...">
+                        </div>
+                    </form>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="fa-regular fa-bell" href="{% url 'notifications' %}" style="padding: 18px 10px;"> 
+                                {{ unread_notifications_count }}
+                            </a>
+                        </li>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                        </button>
+                        <li class="nav-item">
+                            <a class="nav-link custom-link" href="{% url 'acceuil' %}">Acceuil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-link" href="{% url 'about' %}">About</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link custom-link" href="#" style="padding: 18px 10px;">Hello, {{ user }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                </button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link custom-link" href="{% url 'login' %}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-link" href="{% url 'register' %}">Inscription</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Content -->
+    <div class="container-fluid">
+        <!-- Your content goes here -->
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your other scripts -->
+</body>
+</html>

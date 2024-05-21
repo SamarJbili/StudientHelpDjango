@@ -1,0 +1,587 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <header>
+        <head>
+            <!-- Other head content -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        </head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Importer Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Vos autres balises <link> et <script> -->
+</header>
+   <!-- jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <!-- Bootstrap JS (assuming you use Bootstrap) -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <body>
+
+    {% load static %}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block extra_head %}{% endblock %}
+    <style>
+        .navbar-custom {
+            background-color: white;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        .logo img {
+            height: 50px;
+        }
+        .custom-link {
+            padding: 18px 10px;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            margin-left: 20%;
+        }
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+        .compact-search-form {
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+           
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              
+                <div class="fas fa-chevron-left" style="margin-left=20%"><a href="{% url 'acceuil' %}"  class="nav-link custom-link">acceuil</a> </div> 
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'notifications' %}">
+                            <i class="fa-regular fa-bell"></i>
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link custom-link">Hello, {{ user }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link custom-link btn btn-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    
+    <section id="nouvelle-section">
+
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper" style="position: fixed; top: 57px; height: calc(100% - 20px); overflow-y: auto; z-index: 1000; background-color: #fff;">
+         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+        
+            <li>
+               <a href="{% url 'logement-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x"></i></span>Logement </a>
+            </li>
+            <li>
+               <a href="{% url 'transport-list' %}" style="color: #4267B2;"> <span class="fa-stack fa-lg pull-left"> <i class="fa fa-truck fa-stack-1x "></i></span>Transport</a>
+            </li>
+            <li>
+               <a href="{% url 'stage-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-briefcase fa-stack-1x"></i></span>Sujets de stages</a>
+            </li>
+           
+         
+          <li>
+           <a href="#" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span> Évènements</a>
+           <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+              <li><a href="{% url 'eventCult-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span> Évènements culturels</a></li>
+              <li><a href="{% url 'eventSc-list' %}"style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>Évènements scientifiques</a></li>
+           </ul>
+        </li>
+         </ul>
+
+      </div>
+
+   </div>
+   
+ 
+ </body>
+ 
+ </html>
+
+
+
+ 
+
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+    $("#menu-toggle-2").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled-2");
+      // You may need to adjust the selector here depending on your HTML structure
+      $("#menu ul").hide();
+    });
+
+    function initMenu() {
+      // You may need to adjust the selector here depending on your HTML structure
+      $("#menu ul").hide();
+      $("#menu ul").children(".current").parent().show();
+      $("#menu li a").click(function () {
+        var checkElement = $(this).next();
+        if (checkElement.is("ul") && checkElement.is(":visible")) {
+          return false;
+        }
+        if (checkElement.is("ul") && !checkElement.is(":visible")) {
+          $("#menu ul:visible").slideUp("normal");
+          checkElement.slideDown("normal");
+          return false;
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      initMenu();
+    });
+  </script>
+
+  <style>
+   /* Vos styles CSS */
+   #wrapper {
+     padding-left: 250px;
+   }
+
+   #sidebar-wrapper {
+     width: 250px;
+   }
+
+   #page-content-wrapper {
+     padding: 20px;
+     width: calc(100% - 250px); /* Largeur du contenu principal après déduction de la largeur de la barre latérale */
+   }
+
+.nav-pills > li > a {
+   border-radius: 0;
+}
+
+#wrapper {
+   padding-left: 0;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+   overflow: hidden;
+}
+
+#wrapper.toggled {
+   padding-left: 250px;
+   overflow: hidden;
+}
+
+#sidebar-wrapper {
+   z-index: 1000;
+   position: absolute;
+   left: 250px;
+   width: 0;
+   height: 100%;
+   margin-left: -250px;
+   overflow-y: auto;
+   background: #f7f5f5;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+   width: 250px;
+}
+
+#page-content-wrapper {
+   position: absolute;
+   padding: 15px;
+   width: 100%;
+   overflow-x: hidden;
+}
+
+.xyz {
+   min-width: 360px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+   position: relative;
+   margin-right: 0px;
+}
+
+.fixed-brand {
+   width: auto;
+}
+/* Sidebar Styles */
+
+.sidebar-nav {
+   position: absolute;
+   top: 0;
+   width: 250px;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   margin-top: 2px;
+}
+
+.sidebar-nav li {
+   text-indent: 15px;
+   line-height: 40px;
+}
+
+.sidebar-nav li a {
+   display: block;
+   text-decoration: none;
+   color: #5960c6;
+}
+
+.sidebar-nav li a:hover {
+   text-decoration: none;
+   color: #4267B2;
+   background: #fff;
+   border-left: red 2px solid;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+   text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+   height: 65px;
+   font-size: 18px;
+   line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+   color: #f2eeee;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+   color: #fff;
+   background: none;
+}
+
+.no-margin {
+   margin: 0;
+}
+
+@media (min-width: 768px) {
+   #wrapper {
+      padding-left: 250px;
+   }
+   .fixed-brand {
+      width: 250px;
+   }
+   #wrapper.toggled {
+      padding-left: 0;
+   }
+   #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper {
+      width: 50px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper:hover {
+      width: 250px;
+   }
+   #page-content-wrapper {
+      padding: 20px;
+      position: relative;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+   }
+   #wrapper.toggled #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      padding-left: 250px;
+   }
+   #wrapper.toggled-2 #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      margin-left: -200px;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+      width: auto;
+   }
+}
+
+  </style>
+   <!-- jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <!-- Bootstrap JS (assuming you use Bootstrap) -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<style>
+
+.custom-link {
+    border: none;
+    background: none;
+    padding: 0;
+    color: #333; /* Couleur du texte */
+    font-weight: bold; /* Style du texte */
+    text-decoration: none; /* Supprimer le soulignement */
+    display: flex; /* Utiliser flexbox pour aligner l'icône et le texte */
+    align-items: center; /* Aligner verticalement l'icône et le texte */
+}
+.custom-link:hover {
+    color: #007bff; /* Couleur du texte au survol */
+}
+
+
+
+    .navbar-default .navbar-brand {
+        color: #0a68ba; /* Couleur du texte */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Ombre portée */
+        font-weight: bold; /* Gras */
+        font-size: 24px; /* Taille de la police */
+        font-family: 'Arial', sans-serif; /* Police de caractères */
+        margin-left: 55px;
+        margin-top: -49px;
+        margin-bottom: 3px;
+    }
+    img {
+        width: 55px;
+        margin-left: 10px;
+        margin-button: 5px;
+        /* Ajustement de la marge haute */
+  }
+</style>
+
+
+
+
+<main>
+    <section class="testimonial section-padding" >
+        <div class="container" style="bottom=120px">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="text-center">Bienvenue sur Notre Site</h1>
+                    <h2 class="text-center mb-4">Student Help</h2>
+    <!-- Première carte -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Bienvenue sur Student Help</h5>
+            <p class="card-text lead">Une plateforme centralisée pour les étudiants, mettant en avant les offres et demandes de services spécifiques à leur vie universitaire. Voici une explication détaillée des fonctionnalités principales de votre site.</p>
+        </div>
+    </div>
+
+                    <!-- Première carte -->
+                    <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel" >
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{% static 'th (2).jpeg' %}" class="d-block w-100" alt="Image 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'th (1).jpeg' %}" class="d-block w-100" alt="Image 2">
+                            </div>
+                            <!-- Ajoutez plus d'images de carrousel si nécessaire -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                
+                    <!-- Deuxième carte -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Logement Proche de la Faculté</h5>
+                            <p class="card-text lead">Pour aider les étudiants à minimiser le coût et le temps de transport, votre site proposera des offres de logement situées à proximité de leur faculté. Les utilisateurs pourront rechercher et consulter ces offres, ce qui facilitera leur recherche de logement adapté à leurs besoins.</p>
+                        </div>
+                    </div>
+
+                    <!-- Première carte -->
+                    <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{% static 'th (5).jpeg' %}" class="d-block w-100" alt="Image 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'th (7).jpeg' %}" class="d-block w-100" alt="Image 2">
+                            </div>
+                            <!-- Ajoutez plus d'images de carrousel si nécessaire -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <!-- Troisième carte -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Transport en Commun ou de Co-Voiturage</h5>
+                            <p class="card-text lead">Vous offrirez également des services de transport en commun ou de co-voiturage pour permettre aux étudiants de se déplacer plus facilement et économiquement. Les annonces de trajets disponibles seront affichées, permettant aux utilisateurs de trouver des solutions de transport pratiques et abordables.</p>
+                        </div>
+                    </div>
+  <!-- Première carte -->
+  <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'aa.jpeg' %}" class="d-block w-100" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'th (9).jpeg' %}" class="d-block w-100" alt="Image 2">
+        </div>
+        <!-- Ajoutez plus d'images de carrousel si nécessaire -->
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+                    <!-- Quatrième carte -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Sujets de Stages et Affectations d'Encadreurs</h5>
+                            <p class="card-text lead">Votre site permettra aux partenaires de proposer des sujets de stages aux étudiants, et vice versa. Les étudiants pourront également rechercher des stages correspondant à leur domaine d'études et niveau académique. De plus, il sera possible d'indiquer les encadreurs disponibles pour chaque sujet de stage, facilitant ainsi la coordination entre les étudiants et les encadrants.</p>
+                        </div>
+                    </div>
+  <!-- Première carte -->
+  <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'télécharger (4).jpeg' %}" class="d-block w-100" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'télécharger (4).jpeg' %}" class="d-block w-100" alt="Image 2">
+        </div>
+        <!-- Ajoutez plus d'images de carrousel si nécessaire -->
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+                    <!-- Cinquième carte -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Évènements Culturels ou Scientifiques</h5>
+                            <p class="card-text lead">Vous fournirez des informations sur les évènements culturels et scientifiques organisés au profit des étudiants. Cela peut inclure des pièces de théâtre, des films, des présentations musicales, ainsi que des évènements scientifiques organisés par des clubs universitaires. Les détails tels que le prix des évènements culturels et le domaine ou sujet des évènements scientifiques seront spécifiés pour chaque annonce.</p>
+                        </div>
+                    </div>
+      <!-- Première carte -->
+      <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'OIP (8).jpeg' %}" class="d-block w-100" alt="Image 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'OIP (10).jpeg' %}" class="d-block w-100" alt="Image 2">
+            </div>
+            <!-- Ajoutez plus d'images de carrousel si nécessaire -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</section>
+
+</body>
+</html>
+{% endblock %}

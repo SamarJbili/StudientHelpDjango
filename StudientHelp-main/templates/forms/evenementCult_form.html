@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire EvenementCulturel</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'logement/styles.css' %}"> <!-- Lien vers votre fichier CSS -->
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="custom-card">
+                <div class="card-body">
+                    <h2 class="card-title">Ajouter un EvenementCulturel</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+        $('#imageInput').change(function(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function(){
+                var dataURL = reader.result;
+                $('#imagePreview').attr('src', dataURL).show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        });
+    });
+    </script>
+
+<style>
+    .custom-card {
+    margin: 0 auto; /* Centrer horizontalement */
+    margin-top: 50px; /* Marge en haut pour centrer verticalement */
+    max-width: 500px; /* Largeur maximale de la carte */
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 20px; /* Espacement interne */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+}
+
+/* CSS personnalisé pour styliser le formulaire */
+.custom-form {
+    background-color: #c915ba; /* Couleur de fond */
+    padding: 20px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+}
+
+.custom-form input[type="text"],
+.custom-form input[type="email"],
+.custom-form input[type="password"],
+.custom-form select {
+    width: 100%; /* Largeur pleine */
+    padding: 10px; /* Espacement interne */
+    margin-bottom: 10px; /* Marge en bas */
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+.custom-form label {
+    font-weight: bold; /* Gras */
+}
+
+.custom-form button[type="submit"] {
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointer */
+    transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+.custom-form button[type="submit"]:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+
+</style>
+{% endblock %}

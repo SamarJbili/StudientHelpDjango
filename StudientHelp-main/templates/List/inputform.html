@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Sidebar</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+   <!-- Bootstrap CSS (assuming you use Bootstrap) -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-******************" crossorigin="anonymous" />
+
+
+    
+ </head>
+ 
+ <body>
+
+
+
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper" style="position: fixed; top: 57px; height: calc(100% - 20px); overflow-y: auto; z-index: 1000; background-color: #fff;">
+         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+          
+           
+      
+         </ul>
+      </div>
+    
+   </div>
+   
+ 
+ </body>
+ 
+ </html>
+
+
+
+ 
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap JS (assuming you use Bootstrap) -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+    $("#menu-toggle-2").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled-2");
+      // You may need to adjust the selector here depending on your HTML structure
+      $("#menu ul").hide();
+    });
+
+    function initMenu() {
+      // You may need to adjust the selector here depending on your HTML structure
+      $("#menu ul").hide();
+      $("#menu ul").children(".current").parent().show();
+      $("#menu li a").click(function () {
+        var checkElement = $(this).next();
+        if (checkElement.is("ul") && checkElement.is(":visible")) {
+          return false;
+        }
+        if (checkElement.is("ul") && !checkElement.is(":visible")) {
+          $("#menu ul:visible").slideUp("normal");
+          checkElement.slideDown("normal");
+          return false;
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      initMenu();
+    });
+  </script>
+
+  <style>
+   /* Vos styles CSS */
+   #wrapper {
+     padding-left: 250px;
+   }
+
+   #sidebar-wrapper {
+     width: 250px;
+   }
+
+   #page-content-wrapper {
+     padding: 20px;
+     width: calc(100% - 250px); /* Largeur du contenu principal après déduction de la largeur de la barre latérale */
+   }
+
+.nav-pills > li > a {
+   border-radius: 0;
+}
+
+#wrapper {
+   padding-left: 0;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+   overflow: hidden;
+}
+
+#wrapper.toggled {
+   padding-left: 250px;
+   overflow: hidden;
+}
+
+#sidebar-wrapper {
+   z-index: 1000;
+   position: absolute;
+   left: 250px;
+   width: 0;
+   height: 100%;
+   margin-left: -250px;
+   overflow-y: auto;
+   background: #f7f5f5;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+   width: 250px;
+}
+
+#page-content-wrapper {
+   position: absolute;
+   padding: 15px;
+   width: 100%;
+   overflow-x: hidden;
+}
+
+.xyz {
+   min-width: 360px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+   position: relative;
+   margin-right: 0px;
+}
+
+.fixed-brand {
+   width: auto;
+}
+/* Sidebar Styles */
+
+.sidebar-nav {
+   position: absolute;
+   top: 0;
+   width: 250px;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   margin-top: 2px;
+}
+
+.sidebar-nav li {
+   text-indent: 15px;
+   line-height: 40px;
+}
+
+.sidebar-nav li a {
+   display: block;
+   text-decoration: none;
+   color: #5960c6;
+}
+
+.sidebar-nav li a:hover {
+   text-decoration: none;
+   color: #4267B2;
+   background: #fff;
+   border-left: red 2px solid;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+   text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+   height: 65px;
+   font-size: 18px;
+   line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+   color: #f2eeee;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+   color: #fff;
+   background: none;
+}
+
+.no-margin {
+   margin: 0;
+}
+
+@media (min-width: 768px) {
+   #wrapper {
+      padding-left: 250px;
+   }
+   .fixed-brand {
+      width: 250px;
+   }
+   #wrapper.toggled {
+      padding-left: 0;
+   }
+   #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper {
+      width: 50px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper:hover {
+      width: 250px;
+   }
+   #page-content-wrapper {
+      padding: 20px;
+      position: relative;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+   }
+   #wrapper.toggled #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      padding-left: 250px;
+   }
+   #wrapper.toggled-2 #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      margin-left: -200px;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+      width: auto;
+   }
+}
+
+  </style>
+   <!-- jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <!-- Bootstrap JS (assuming you use Bootstrap) -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<nav class="navbar navbar-default no-margin" style="background-color: white; position: fixed; width: 100%; z-index: 1000;">
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <div class="logo">
+
+            <a class="navbar-brand" href="#">Student Help</a>
+        </div>
+    </div>
+
+    <!-- Liste de boutons -->
+    <div class="buttons">
+        <a class="button" href="#" onclick="redirectAfterLogin('{% url 'create-logement' %}')">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x"></i></span>
+            Logement
+        </a>
+        <a class="button" href="#" onclick="redirectAfterLogin('{% url 'create-stage' %}')">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-briefcase fa-stack-1x"></i></span>
+            Stage
+        </a>
+        <div class="dropdown">
+            <a class="button" href="#" onclick="redirectAfterLogin('#')">
+                <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                Evenement
+            </a>
+            <div class="dropdown-content">
+                <a class="button" href="#" onclick="redirectAfterLogin('{% url 'create-evenementCult' %}')">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                    Culturel
+                </a>
+                <a class="button" href="#" onclick="redirectAfterLogin('{% url 'create-evenementSc' %}')">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>
+                    Scientifique
+                </a>
+            </div>
+        </div>
+        <a class="button" href="#" onclick="redirectAfterLogin('{% url 'create-transport' %}')">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-truck fa-stack-1x "></i></span>
+            Transport
+        </a>
+    </div>
+</nav>
+
+<style>
+.card2 {
+    background-color: white;
+    width: calc(65% - 40px);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    position: relative;
+    left: 13%;
+    bottom: 100px;
+}
+
+/* Style pour l'image */
+.card2 img {
+    max-width: 50%;
+    height: auto; 
+    margin-left: 20%;
+}
+
+/* Style pour les boutons "J'aime" et "Ajouter un commentaire" */
+.like-btn,
+.comment-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Style pour les boutons survolés */
+.like-btn:hover,
+.comment-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Alignement du formulaire de commentaire */
+.comment-form {
+    display: flex;
+    align-items: center;
+}
+
+.comment-form textarea {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Styles supplémentaires pour d'autres éléments (non modifiés) */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+input[type="text"] {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: white;
+    padding: 10px 20px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.button:hover {
+    background-color: #f0f0f0;
+}
+
+.list {
+    overflow: hidden;
+}
+
+.search-bar {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+</style>
+

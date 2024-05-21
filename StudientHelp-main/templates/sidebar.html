@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Sidebar</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+   <!-- Bootstrap CSS (assuming you use Bootstrap) -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<body>
+ <div id="wrapper">
+   <!-- Sidebar -->
+   <div id="sidebar-wrapper" style="position: fixed; top: 100px; height: calc(100% - 20px); overflow-y: auto; z-index: 1000; background-color: #fff;">
+      <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+         <li>
+            <a href="{% url 'logement-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x"></i></span>Logement</a>
+         </li>
+         <li>
+            <a href="{% url 'transport-list' %}" style="color: #4267B2;"> <span class="fa-stack fa-lg pull-left"> <i class="fa fa-truck fa-stack-1x"></i></span>Transport</a>
+         </li>
+         <li>
+            <a href="{% url 'stage-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-briefcase fa-stack-1x"></i></span>Sujets de stages</a>
+         </li>
+         <li>
+            <a href="#" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span> Évènements</a>
+            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+               <li><a href="{% url 'eventCult-list' %}" style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span> Évènements culturels</a></li>
+               <li><a href="{% url 'eventSc-list' %}"style="color: #4267B2;"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x"></i></span>Évènements scientifiques</a></li>
+            </ul>
+         </li>
+      </ul>
+      <!-- Social Media Icons -->
+      <div class="w3-panel w3-large" style="position: absolute; bottom: 25px; width: 200%; ">
+         <i class="fa fa-facebook-official w3-hover-opacity"></i>
+         <i class="fa fa-instagram w3-hover-opacity"></i>
+         <i class="fa fa-snapchat w3-hover-opacity"></i>
+         <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+         <i class="fa fa-twitter w3-hover-opacity"></i>
+         <i class="fa fa-linkedin w3-hover-opacity"></i>
+      </div>
+   </div>
+ </div>
+
+ <!-- jQuery -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <!-- Bootstrap JS (assuming you use Bootstrap) -->
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <script>
+   $("#menu-toggle").click(function (e) {
+     e.preventDefault();
+     $("#wrapper").toggleClass("toggled");
+   });
+
+   $("#menu-toggle-2").click(function (e) {
+     e.preventDefault();
+     $("#wrapper").toggleClass("toggled-2");
+     // You may need to adjust the selector here depending on your HTML structure
+     $("#menu ul").hide();
+   });
+
+   function initMenu() {
+     // You may need to adjust the selector here depending on your HTML structure
+     $("#menu ul").hide();
+     $("#menu ul").children(".current").parent().show();
+     $("#menu li a").click(function () {
+       var checkElement = $(this).next();
+       if (checkElement.is("ul") && checkElement.is(":visible")) {
+         return false;
+       }
+       if (checkElement.is("ul") && !checkElement.is(":visible")) {
+         $("#menu ul:visible").slideUp("normal");
+         checkElement.slideDown("normal");
+         return false;
+       }
+     });
+   }
+
+   $(document).ready(function () {
+     initMenu();
+   });
+ </script>
+
+ <style>
+  /* Sidebar Styles */
+  #wrapper {
+    padding-left: 250px;
+  }
+
+  #sidebar-wrapper {
+    width: 250px;
+  }
+
+  #page-content-wrapper {
+    padding: 20px;
+    width: calc(100% - 250px); /* Width of the main content after subtracting the sidebar width */
+  }
+
+  .nav-pills > li > a {
+    border-radius: 0;
+  }
+
+  #wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    overflow: hidden;
+  }
+
+  #wrapper.toggled {
+    padding-left: 250px;
+    overflow: hidden;
+  }
+
+  #sidebar-wrapper {
+    z-index: 1000;
+    position: absolute;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #f7f5f5;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+  }
+
+  #page-content-wrapper {
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .xyz {
+    min-width: 360px;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0px;
+  }
+
+  .fixed-brand {
+    width: auto;
+  }
+
+  /* Sidebar Styles */
+  .sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 2px;
+  }
+
+  .sidebar-nav li {
+    text-indent: 15px;
+    line-height: 40px;
+  }
+
+  .sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #5960c6;
+  }
+
+  .sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #4267B2;
+    background: #fff;
+    border-left: red 2px solid;
+  }
+
+  .sidebar-nav li a:active,
+  .sidebar-nav li a:focus {
+    text-decoration: none;
+  }
+
+  .sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+  }
+
+  .sidebar-nav > .sidebar-brand a {
+    color: #f2eeee;
+  }
+
+  .sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+  }
+
+  .no-margin {
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    #wrapper {
+      padding-left: 250px;
+    }
+    .fixed-brand {
+      width: 250px;
+    }
+    #wrapper.toggled {
+      padding-left: 0;
+    }
+    #sidebar-wrapper {
+      width: 250px;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+      width: 250px;
+    }
+    #wrapper.toggled-2 #sidebar-wrapper {
+      width: 50px;
+    }
+    #wrapper.toggled-2 #sidebar-wrapper:hover {
+      width: 250px;
+    }
+    #page-content-wrapper {
+      padding: 20px;
+      position: relative;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+    #wrapper.toggled #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      padding-left: 250px;
+    }
+    #wrapper.toggled-2 #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      margin-left: -200px;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+      width: auto;
+    }
+  }
+ </style>
+</body>
+</html>
